@@ -1,0 +1,6 @@
+#,,モンスター名,画像,体力,アクションスピード,ダメージ,攻撃力,防御力,魔法ダメージ値,魔法攻撃力,魔法防御力,アクション1,アクション2,アクション3,アクション4,戦利品,ドロップ率,お金,経験値,攻撃回数
+1,id,name,image,hp,speed,damage,atk,def,magic_damage,magic_atk,magic_def,action_id_1,action_id_2,action_id_3,action_id_4,drop_item_id,drop_item_prob,drop_gold,exp,attack_times
+#,id,string,string,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int
+1,1001,テストオーガ,オーガ（フンババ色違い）.png,1000,5,10,100,100,150,50,100,1000,1000,1000,1000,1000,20,100,50,1
+1,1002,テストワシ,ワシ.png,2000,10,10,50,100,100,100,50,1000,1000,1000,1000,1000,50,100,100,1
+1,2001,テストボス,アカタウロス2.png,10000,5,20,100,100,150,100,100,1000,1000,1000,1000,1000,50,100,1000,1

@@ -1,0 +1,5 @@
+#,,対象シナリオID,モンスターID,最小歩数,最大歩数
+1,id,scenario_id,monster_id,walk_min,walk_max
+#,id,int,int,int,int
+1,1001001,1001,1001,1,25
+1,1001002,1001,1002,15,50

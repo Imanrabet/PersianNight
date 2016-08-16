@@ -1,0 +1,7 @@
+#,,イベント名,スクリプトファイル名
+1,id,name,script
+#,id,string,string
+1,1001,第一章のOP,story1_op.txt
+1,1002,第一章の１,story1_1.txt
+1,1003,第一章の２,story1_2.txt
+1,1004,第一章のED,story1_ed.txt
