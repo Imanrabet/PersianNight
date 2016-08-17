@@ -64,6 +64,9 @@
     <Compile Include="master_data\MD_Monsters.cs" />
     <Compile Include="master_data\MD_Scenarios.cs" />
     <Compile Include="scene\Scene_BATTLE.cs" />
+    <Compile Include="scene\Scene_GAMEOVER.cs" />
+    <Compile Include="scene\Scene_JIN.cs" />
+    <Compile Include="scene\Scene_OASIS.cs" />
     <Compile Include="scene\Scene_SELECT_SCENARIO.cs" />
     <Compile Include="scene\Scene_ADV.cs" />
     <Compile Include="Script.cs" />
