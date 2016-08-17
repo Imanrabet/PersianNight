@@ -17,8 +17,8 @@ namespace PersianNight
 	{
 		private Drawable m_draw_ENEMY;
 		private Drawable m_draw_DIN;
-		public Wnd_BattleStatus m_Wnd_BattleStatus;
-		public Wnd_BattleCommandPanel m_Wnd_BattleCommandPanel;
+		public Wnd_CharaStatus m_Wnd_CharaStatus;
+		public Wnd_CommandPanel m_Wnd_CommandPanel;
 		private Drawable m_draw_DistanceMe;
 		private Drawable m_draw_DistanceEnemy;
 		private Drawable m_draw_GameOver;
@@ -53,14 +53,14 @@ namespace PersianNight
 			m_nDragBottomRightY = 0;				//	ドラッグ範囲
 
 			//	メッセージウィンドウ
-			m_Wnd_BattleCommandPanel = new Wnd_BattleCommandPanel();
-			m_Wnd_BattleCommandPanel.Initialize();
-			AddChildDrawable(m_Wnd_BattleCommandPanel, this);
+			m_Wnd_CommandPanel = new Wnd_CommandPanel();
+			m_Wnd_CommandPanel.Initialize();
+			AddChildDrawable(m_Wnd_CommandPanel, this);
 
 			//	ステータスウィンドウ
-			m_Wnd_BattleStatus = new Wnd_BattleStatus();
-			m_Wnd_BattleStatus.Initialize();
-			AddChildDrawable(m_Wnd_BattleStatus, this);
+			m_Wnd_CharaStatus = new Wnd_CharaStatus();
+			m_Wnd_CharaStatus.Initialize();
+			AddChildDrawable(m_Wnd_CharaStatus, this);
 
 			//	距離アイコン
 			m_draw_DistanceEnemy = new Drawable();
@@ -185,9 +185,9 @@ namespace PersianNight
 			//　背景の差し替え
 			SetGraphicHandle(DX.LoadGraph(GamePersianNight.s_szGraphicPath + GamePersianNight.CurrentScenarios.szBattleBack), 1);
 			//	ステータスウィンドウのセットアップ
-			m_Wnd_BattleStatus.Setup();
+			m_Wnd_CharaStatus.Setup();
 			//	コマンドパネルのセットアップ
-			m_Wnd_BattleCommandPanel.Setup();
+			m_Wnd_CommandPanel.InitPanel();
 			//	とりあえず進む場面から
 			SetPrimaryInput();
 			//	ガベコレ
@@ -199,14 +199,15 @@ namespace PersianNight
 		public void StatusUpdate()
 		{
 			//	ステータスウィンドウのセットアップ
-			m_Wnd_BattleStatus.Setup();
+			m_Wnd_CharaStatus.Setup();
 		}
 		//================================================================================
 		/// <summary>バトル突入処理</summary>
 		//================================================================================
 		public void EnterBattle()
 		{
-			m_Wnd_BattleCommandPanel.EnterBattle();
+			//	パネルを初期化
+			m_Wnd_CommandPanel.InitPanel();
 			//	敵イメージを設定
 			int nMonsterId = DD_BattleCharacter.GetCharacterParameter(2, EnumCharacterParameter.MONSTER_ID);
 			string szMonsterImage = MD_Monsters.GetMonstersFromId(nMonsterId).szImage;
@@ -214,15 +215,15 @@ namespace PersianNight
 			//	敵名称を設定
 			m_szEnemyName = MD_Monsters.GetMonstersFromId(nMonsterId).szName;
 			//	パネルに敵の出現を表示
-			m_Wnd_BattleCommandPanel.SetDescription(0, GamePersianNight.CurrentMonster.szName + " があらわれた！");
+			m_Wnd_CommandPanel.SetDescription(0, GamePersianNight.CurrentMonster.szName + " があらわれた！");
 			//	コマンド更新
 			if (GamePersianNight.bIsBoss == false)
 			{
-				m_Wnd_BattleCommandPanel.SetButtonString(0, "逃げる", EnumPanelEvent.ESCAPE,null);
-				m_Wnd_BattleCommandPanel.SetButtonEnable(0, true);
+				m_Wnd_CommandPanel.SetButtonString(0, "逃げる", EnumPanelEvent.ESCAPE,null);
+				m_Wnd_CommandPanel.SetButtonEnable(0, true);
 			}
-			m_Wnd_BattleCommandPanel.SetButtonString(1, "戦う", EnumPanelEvent.BATTLE,null);
-			m_Wnd_BattleCommandPanel.SetButtonEnable(1, true);
+			m_Wnd_CommandPanel.SetButtonString(1, "戦う", EnumPanelEvent.BATTLE,null);
+			m_Wnd_CommandPanel.SetButtonEnable(1, true);
 		}
 		//================================================================================
 		/// <summary>オアシス突入処理</summary>
@@ -232,14 +233,14 @@ namespace PersianNight
 			//背景を変更
 			SetGraphicHandle(DX.LoadGraph(GamePersianNight.s_szGraphicPath + "オアシス.jpg"), 1);
 			//	
-			m_Wnd_BattleCommandPanel.SetDescription(0, "オアシスのようだ");
+			m_Wnd_CommandPanel.SetDescription(0, "オアシスのようだ");
 			//	コマンド更新
-			m_Wnd_BattleCommandPanel.SetButtonString(0, "休む（HP回復、追跡者との距離-1）", EnumPanelEvent.REST, null);
-			m_Wnd_BattleCommandPanel.SetButtonEnable(0, true);
-			m_Wnd_BattleCommandPanel.SetButtonString(1, "先に進む", EnumPanelEvent.PROCEED, null);
-			m_Wnd_BattleCommandPanel.SetButtonEnable(1, true);
-			m_Wnd_BattleCommandPanel.SetButtonString(2, "セーブする", EnumPanelEvent.SAVE, null);
-			m_Wnd_BattleCommandPanel.SetButtonEnable(2, true);
+			m_Wnd_CommandPanel.SetButtonString(0, "休む（HP回復、追跡者との距離-1）", EnumPanelEvent.REST, null);
+			m_Wnd_CommandPanel.SetButtonEnable(0, true);
+			m_Wnd_CommandPanel.SetButtonString(1, "先に進む", EnumPanelEvent.PROCEED, null);
+			m_Wnd_CommandPanel.SetButtonEnable(1, true);
+			m_Wnd_CommandPanel.SetButtonString(2, "セーブする", EnumPanelEvent.SAVE, null);
+			m_Wnd_CommandPanel.SetButtonEnable(2, true);
 		}
 		//================================================================================
 		/// <summary>ジン突入処理</summary>
@@ -247,12 +248,12 @@ namespace PersianNight
 		public void EnterDin()
 		{
 			//	パネルを綺麗に
-			m_Wnd_BattleCommandPanel.Setup();
+			m_Wnd_CommandPanel.InitPanel();
 			//ジンを表示
 			m_draw_DIN.bDoDraw = true;
 			//	
-			m_Wnd_BattleCommandPanel.SetDescription(0, "助けはいるかい？");
-			m_Wnd_BattleCommandPanel.SetDescription(1, "もちろん対価は必要だよ");
+			m_Wnd_CommandPanel.SetDescription(0, "助けはいるかい？");
+			m_Wnd_CommandPanel.SetDescription(1, "もちろん対価は必要だよ");
 			//
 			List<MD_Dins> list = MD_Dins.GetDinList(GamePersianNight.CurrentScenarios.nId);
 			for (int i = 0; i < 3;i++ )
@@ -260,26 +261,26 @@ namespace PersianNight
 				//所持金足りてるかチェック
 				if (GamePersianNight.nMoney < list[i].nPrice)
 				{
-					m_Wnd_BattleCommandPanel.SetButtonString(i, list[i].szName + "　　[" + list[i].nPrice + "]", EnumPanelEvent.DIN, list[i].nId, COLOR_RED);
+					m_Wnd_CommandPanel.SetButtonString(i, list[i].szName + "　　[" + list[i].nPrice + "]", EnumPanelEvent.DIN, list[i].nId, COLOR_RED);
 				}
 				else
 				{
 					//フェニックスの尾は１回のみ
 					if (list[i].nType == 4 && GamePersianNight.Phoenix.Count != 0)
 					{
-						m_Wnd_BattleCommandPanel.SetButtonString(i, list[i].szName + "　　[" + list[i].nPrice + "]", EnumPanelEvent.DIN, list[i].nId, COLOR_RED);
+						m_Wnd_CommandPanel.SetButtonString(i, list[i].szName + "　　[" + list[i].nPrice + "]", EnumPanelEvent.DIN, list[i].nId, COLOR_RED);
 					}
 					else
 					{
-						m_Wnd_BattleCommandPanel.SetButtonString(i, list[i].szName + "　　[" + list[i].nPrice + "]", EnumPanelEvent.DIN, list[i].nId, COLOR_BLACK);
+						m_Wnd_CommandPanel.SetButtonString(i, list[i].szName + "　　[" + list[i].nPrice + "]", EnumPanelEvent.DIN, list[i].nId, COLOR_BLACK);
 					}
 				}
-				m_Wnd_BattleCommandPanel.SetButtonEnable(i, true);
+				m_Wnd_CommandPanel.SetButtonEnable(i, true);
 			}
-			m_Wnd_BattleCommandPanel.SetButtonString(3, "もう十分だ", EnumPanelEvent.BYE_DIN,null , COLOR_BLACK);
-			m_Wnd_BattleCommandPanel.SetButtonEnable(3, true);
+			m_Wnd_CommandPanel.SetButtonString(3, "もう十分だ", EnumPanelEvent.BYE_DIN,null , COLOR_BLACK);
+			m_Wnd_CommandPanel.SetButtonEnable(3, true);
 			//	キャラグラ更新
-			m_Wnd_BattleCommandPanel.SetCharacterFace(MD_Characters.GetCharactersFromID(9999));
+			m_Wnd_CommandPanel.SetCharacterFace(MD_Characters.GetCharactersFromID(9999));
 		}
 		//================================================================================
 		/// <summary>バトル終了処理</summary>
@@ -290,7 +291,7 @@ namespace PersianNight
 			m_draw_ENEMY.SetGraphicHandle(-1, 1);
 			//	敵名称を設定
 			m_szEnemyName = "";
-			m_Wnd_BattleStatus.ExitBattle();
+			m_Wnd_CharaStatus.ClearATB();
 		}
 		//================================================================================
 		/// <summary>オアシス終了処理</summary>
@@ -307,7 +308,7 @@ namespace PersianNight
 		public void ExitDin()
 		{
 			//	パネルを綺麗に
-			m_Wnd_BattleCommandPanel.Setup();
+			m_Wnd_CommandPanel.InitPanel();
 			//ジンを非表示
 			m_draw_DIN.bDoDraw = false;
 		}
@@ -324,7 +325,7 @@ namespace PersianNight
 		public void ClearBattle()
 		{
 			//	パネルの更新
-			m_Wnd_BattleCommandPanel.Setup();
+			m_Wnd_CommandPanel.InitPanel();
 			//	モンスイメージ消去
 			m_draw_ENEMY.SetGraphicHandle(-1, 1);
 			//	標準入力状態へ
@@ -336,11 +337,11 @@ namespace PersianNight
 		public void SetPrimaryInput()
 		{
 			ClearPanel(true);
-			m_Wnd_BattleCommandPanel.SetDescription(0, "主人公");
-			m_Wnd_BattleCommandPanel.SetDescription(1, "「どうする？");
-			m_Wnd_BattleCommandPanel.SetButtonString(0, "前にすすむ", EnumPanelEvent.PROCEED,null);
-			m_Wnd_BattleCommandPanel.SetButtonEnable(0, true);
-			m_Wnd_BattleCommandPanel.SetCharacterFace(GamePersianNight.CurrentHero);
+			m_Wnd_CommandPanel.SetDescription(0, "主人公");
+			m_Wnd_CommandPanel.SetDescription(1, "「どうする？");
+			m_Wnd_CommandPanel.SetButtonString(0, "前にすすむ", EnumPanelEvent.PROCEED,null);
+			m_Wnd_CommandPanel.SetButtonEnable(0, true);
+			m_Wnd_CommandPanel.SetCharacterFace(GamePersianNight.CurrentHero);
 		}
 		//================================================================================
 		/// <summary>バトル入力状態へ</summary>
@@ -348,10 +349,10 @@ namespace PersianNight
 		public void BattleCommandInput(int nDDIndex)
 		{
 			//	パネルを綺麗に
-			m_Wnd_BattleCommandPanel.Setup();
+			m_Wnd_CommandPanel.InitPanel();
 			//	コマンド更新
-			m_Wnd_BattleCommandPanel.SetDescription(0, MD_Characters.GetCharactersFromID(DD_BattleCharacter.GetCharacterParameter(nDDIndex, EnumCharacterParameter.CHARACTER_ID)).szName);
-			m_Wnd_BattleCommandPanel.SetDescription(1, "「どうする？");
+			m_Wnd_CommandPanel.SetDescription(0, MD_Characters.GetCharactersFromID(DD_BattleCharacter.GetCharacterParameter(nDDIndex, EnumCharacterParameter.CHARACTER_ID)).szName);
+			m_Wnd_CommandPanel.SetDescription(1, "「どうする？");
 			for (int i = 0; i < 4;i++ )
 			{
 				int nCharId = DD_BattleCharacter.GetCharacterParameter(nDDIndex, EnumCharacterParameter.CHARACTER_ID);
@@ -365,24 +366,24 @@ namespace PersianNight
 				//TP足りてるかチェック
 				if (DD_BattleCharacter.GetCharacterParameter(nDDIndex, EnumCharacterParameter.CURRENT_TP) < MD_Actions.GetActionsFromID(nActionId).nTp)
 				{
-					m_Wnd_BattleCommandPanel.SetButtonString(i, szActionName, EnumPanelEvent.ACTION, new int[] { nActionId, -1 }, COLOR_RED);
+					m_Wnd_CommandPanel.SetButtonString(i, szActionName, EnumPanelEvent.ACTION, new int[] { nActionId, -1 }, COLOR_RED);
 				}
 				else
 				{
 					//サブターゲットが必要ならイベントを差し替える
 					if (bNeedSubTarget == true)
 					{
-						m_Wnd_BattleCommandPanel.SetButtonString(i, szActionName, EnumPanelEvent.SUBTARGET, new int[] { nActionId, -1 }, COLOR_BLACK);
+						m_Wnd_CommandPanel.SetButtonString(i, szActionName, EnumPanelEvent.SUBTARGET, new int[] { nActionId, -1 }, COLOR_BLACK);
 					}
 					else
 					{
-						m_Wnd_BattleCommandPanel.SetButtonString(i, szActionName, EnumPanelEvent.ACTION, new int[] { nActionId, -1 }, COLOR_BLACK);
+						m_Wnd_CommandPanel.SetButtonString(i, szActionName, EnumPanelEvent.ACTION, new int[] { nActionId, -1 }, COLOR_BLACK);
 					}
 				}
-				m_Wnd_BattleCommandPanel.SetButtonEnable(i, true);
+				m_Wnd_CommandPanel.SetButtonEnable(i, true);
 			}
 			//	キャラグラ更新
-			m_Wnd_BattleCommandPanel.SetCharacterFace(DD_BattleCharacter.GetCharacterParameter(nDDIndex, EnumCharacterParameter.CHARACTER_ID));
+			m_Wnd_CommandPanel.SetCharacterFace(DD_BattleCharacter.GetCharacterParameter(nDDIndex, EnumCharacterParameter.CHARACTER_ID));
 		}
 		//==================================================================================
 		//	サブターゲットコマンドをフックする
@@ -390,11 +391,11 @@ namespace PersianNight
 		private void SUBTARGET(object sender, InnerPostEventArgs e)
 		{
 			//ステータス部分のサブターゲット機能をオンにする
-			m_Wnd_BattleStatus.SwitchSubtargetFunc(true, (int[])e.oGenericObject);
+			m_Wnd_CharaStatus.SwitchSubtargetFunc(true, (int[])e.oGenericObject);
 			//サブターゲット選択中はコマンド隠す
 			int[] n = (int[])e.oGenericObject;
 			string sz = MD_Actions.GetActionsFromID(n[0]).szName;
-			m_Wnd_BattleCommandPanel.DoSubtarget(sz);
+			m_Wnd_CommandPanel.DoSubtarget(sz);
 		}
 		//==================================================================================
 		//	サブターゲットキャンセル
@@ -402,9 +403,9 @@ namespace PersianNight
 		private void CANCEL_SUBTARGET(object sender, InnerPostEventArgs e)
 		{
 			//ステータス部分のサブターゲット機能をオフにする
-			m_Wnd_BattleStatus.SwitchSubtargetFunc(false, null);
+			m_Wnd_CharaStatus.SwitchSubtargetFunc(false, null);
 			//コマンドパネルの復帰
-			m_Wnd_BattleCommandPanel.RevertSubtarget();
+			m_Wnd_CommandPanel.RevertSubtarget();
 		}
 		//==================================================================================
 		//	サブターゲットから実行されることがあるので、サブターゲット機能をオフする
@@ -412,14 +413,14 @@ namespace PersianNight
 		private void ACTION(object sender, InnerPostEventArgs e)
 		{
 			//ステータス部分のサブターゲット機能をオフにする
-			m_Wnd_BattleStatus.SwitchSubtargetFunc(false, null);
+			m_Wnd_CharaStatus.SwitchSubtargetFunc(false, null);
 		}
 		//================================================================================
 		/// <summary>バトル結果表示</summary>
 		//================================================================================
 		public void ShowLog(int nLineIndex,string szLog)
 		{
-			m_Wnd_BattleCommandPanel.SetDescription(nLineIndex, szLog);
+			m_Wnd_CommandPanel.SetDescription(nLineIndex, szLog);
 		}
 		//================================================================================
 		/// <summary>パネルをクリック可能に</summary>
@@ -427,8 +428,8 @@ namespace PersianNight
 		public void PanelEnable()
 		{
 			//パネルをクリック可能に
-			m_Wnd_BattleCommandPanel.bMouseAct = true;
-			m_Wnd_BattleCommandPanel.InnerPostEventArgs = new GameFramework.InnerPostEventArgs(EnumPanelEvent.RESUME);
+			m_Wnd_CommandPanel.bMouseAct = true;
+			m_Wnd_CommandPanel.InnerPostEventArgs = new GameFramework.InnerPostEventArgs(EnumPanelEvent.RESUME);
 		}
 		//================================================================================
 		/// <summary>パネルのイベントを設定</summary>
@@ -436,8 +437,8 @@ namespace PersianNight
 		public void SetPanelEvent(EnumPanelEvent epe)
 		{
 			//パネルをクリック可能に
-			m_Wnd_BattleCommandPanel.bMouseAct = true;
-			m_Wnd_BattleCommandPanel.InnerPostEventArgs = new GameFramework.InnerPostEventArgs(epe);
+			m_Wnd_CommandPanel.bMouseAct = true;
+			m_Wnd_CommandPanel.InnerPostEventArgs = new GameFramework.InnerPostEventArgs(epe);
 		}
 		//================================================================================
 		/// <summary>パネル表示を綺麗に</summary>
@@ -445,10 +446,10 @@ namespace PersianNight
 		public void ClearPanel(bool bIsFaceExist)
 		{
 			//	パネルを綺麗に
-			m_Wnd_BattleCommandPanel.Setup();
-			if (bIsFaceExist == false) m_Wnd_BattleCommandPanel.SetCharacterFace(null);
+			m_Wnd_CommandPanel.InitPanel();
+			if (bIsFaceExist == false) m_Wnd_CommandPanel.SetCharacterFace(null);
 			//パネルクリック不可に戻す
-			m_Wnd_BattleCommandPanel.bMouseAct = false;
+			m_Wnd_CommandPanel.bMouseAct = false;
 
 		}
 	}

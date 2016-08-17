@@ -49,6 +49,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BattleManager.cs" />
     <Compile Include="dynamic_data\DD_ItemBox.cs" />
     <Compile Include="dynamic_data\DD_SaveData.cs" />
     <Compile Include="dynamic_data\DD_BattleCharacter.cs" />
@@ -82,10 +83,9 @@
     <Compile Include="scene\Scene_RPG.cs" />
     <Compile Include="scene\Scene_TITLE.cs" />
     <Compile Include="wnd\Wnd_AdventureText.cs" />
-    <Compile Include="wnd\Wnd_BattleStatus.cs" />
+    <Compile Include="wnd\Wnd_CharaStatus.cs" />
     <Compile Include="wnd\Wnd_BattleStatusCharacter.cs" />
-    <Compile Include="wnd\Wnd_BattleCommandPanel.cs" />
-    <Compile Include="wnd\Wnd_OasisCommandPanel.cs" />
+    <Compile Include="wnd\Wnd_CommandPanel.cs" />
     <EmbeddedResource Include="SplashForm.resx">
       <DependentUpon>SplashForm.cs</DependentUpon>
     </EmbeddedResource>

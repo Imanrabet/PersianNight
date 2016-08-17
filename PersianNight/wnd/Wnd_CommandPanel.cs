@@ -42,7 +42,7 @@ namespace PersianNight
 	//	
 	//================================================================================
 	[Serializable]
-	public class Wnd_BattleCommandPanel : Drawable
+	public class Wnd_CommandPanel : Drawable
 	{
 		private List<Drawable> m_list_draw_SelectButtons;
 		private string[] m_szSelectButtonString;
@@ -141,7 +141,7 @@ namespace PersianNight
 		//================================================================================
 		/// <summary>パネルの初期化</summary>
 		//================================================================================
-		public void Setup()
+		public void InitPanel()
 		{
 			SetButtonString(0, "", EnumPanelEvent.NULL, null, COLOR_BLACK);
 			SetButtonString(1, "", EnumPanelEvent.NULL, null, COLOR_BLACK);
@@ -217,13 +217,5 @@ namespace PersianNight
 				if (m_list_Child_drawable[3].bDoDraw == true) DX.DrawStringToHandle(m_list_Child_drawable[3].nDrawPosScreen_X, m_list_Child_drawable[3].nDrawPosScreen_Y, m_szSelectButtonString[3].ToString(), m_list_COMMAND_TEXT_COLOR[3], fh);
 			}
 		}
-		//================================================================================
-		/// <summary>バトル突入処理</summary>
-		//================================================================================
-		public void EnterBattle()
-		{
-			Setup();
-		}
-
 	}
 }

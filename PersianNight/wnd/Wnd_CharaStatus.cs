@@ -12,7 +12,7 @@ namespace PersianNight
 	//	
 	//================================================================================
 	[Serializable]
-	public class Wnd_BattleStatus : Drawable
+	public class Wnd_CharaStatus : Drawable
 	{
 		private Wnd_BattleStatusCharacter[] m_Wnd_BattleStatusCharacter;
 		private int m_nMoney = 0;
@@ -102,7 +102,7 @@ namespace PersianNight
 			m_drawable_SelectWaku[0].InnerPostEventArgsRightClick = new InnerPostEventArgs(EnumPanelEvent.CANCEL_SUBTARGET);
 			m_drawable_SelectWaku[1].InnerPostEventArgsRightClick = new InnerPostEventArgs(EnumPanelEvent.CANCEL_SUBTARGET);
 			//マウスを強制移動
-			DX.SetMousePoint(m_nDrawPosScreen_X + 50, m_nDrawPosScreen_Y + 50);
+			//DX.SetMousePoint(m_nDrawPosScreen_X + 50, m_nDrawPosScreen_Y + 50);
 		}
 		//================================================================================
 		//	
@@ -148,7 +148,10 @@ namespace PersianNight
 				m_nMoney = GamePersianNight.nMoney;
 			}
 		}
-		public void ExitBattle()
+		//================================================================================
+		//	
+		//================================================================================
+		public void ClearATB()
 		{
 			for (int i = 0; i < 2; i++)
 			{
