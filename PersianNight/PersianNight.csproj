@@ -85,6 +85,7 @@
     <Compile Include="wnd\Wnd_BattleStatus.cs" />
     <Compile Include="wnd\Wnd_BattleStatusCharacter.cs" />
     <Compile Include="wnd\Wnd_BattleCommandPanel.cs" />
+    <Compile Include="wnd\Wnd_OasisCommandPanel.cs" />
     <EmbeddedResource Include="SplashForm.resx">
       <DependentUpon>SplashForm.cs</DependentUpon>
     </EmbeddedResource>

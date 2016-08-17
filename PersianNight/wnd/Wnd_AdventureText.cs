@@ -164,18 +164,27 @@ namespace PersianNight
 		public override void Update()
 		{
 			base.Update();
-			//	
+			KeyCheck( );
+			return;
+		}
+		//================================================================================
+		/// <summary>キー処理。キー押下に応じてパース処理を実行。キー入力がなければfalse</summary>
+		//================================================================================
+		private bool KeyCheck()
+		{
 			if (DX.CheckHitKey(DX.KEY_INPUT_RETURN) == 1)
 			{
 				if (m_bRETURNKEYDOWN == false)
 				{
 					m_bRETURNKEYDOWN = true;
-					if (CheckNextLine() == false)
+					//	ENTERキー押下上で次の行をパース
+					if (CheckNextLine( ) == false)
 					{
+						//	行末或いはパース失敗ならADVシーンを抜ける
 						m_InnerPostEventArgs = new GameFramework.InnerPostEventArgs(EnumGUIEvent.EVENT_EXIT);
-						BridgeEvent();
+						BridgeEvent( );
 					}
-					return;
+					return true;
 				}
 			}
 			else
@@ -185,13 +194,16 @@ namespace PersianNight
 			//
 			if (DX.CheckHitKey(DX.KEY_INPUT_RCONTROL) == 1 || DX.CheckHitKey(DX.KEY_INPUT_LCONTROL) == 1)
 			{
-				if (CheckNextLine() == false)
+				//	CTRLキーで次の行をパース（ENTERと異なり押しているだけで有効）
+				if (CheckNextLine( ) == false)
 				{
+					//	行末或いはパース失敗ならADVシーンを抜ける
 					m_InnerPostEventArgs = new GameFramework.InnerPostEventArgs(EnumGUIEvent.EVENT_EXIT);
-					BridgeEvent();
+					BridgeEvent( );
 				}
-				return;
+				return true;
 			}
+			return false;
 		}
 		//================================================================================
 		//	
@@ -242,7 +254,7 @@ namespace PersianNight
 			}
 			else
 			{
-				AnalyzeTextLine2(szNextLine);
+				ParseTextLine2(szNextLine);
 				if (m_nShowLine >= 6)
 				{
 					m_nShowLine = 0;
@@ -275,7 +287,7 @@ namespace PersianNight
 		//================================================================================
 		/// <summary></summary>
 		//================================================================================
-		private void AnalyzeTextLine2(string szText)
+		private void ParseTextLine2(string szText)
 		{
 			for (int i = m_nShowLine; i < 6; i++) { m_szArraySentence[i] = ""; }
 			m_szArraySentence[m_nShowLine] = szText.Replace("\\p", "");
@@ -285,7 +297,7 @@ namespace PersianNight
 		//================================================================================
 		/// <summary></summary>
 		//================================================================================
-		private void AnalyzeTextLine(string szText)
+		private void ParseTextLine(string szText)
 		{
 			m_szArraySentence[0] = "";
 			m_szArraySentence[1] = "";

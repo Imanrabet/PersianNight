@@ -61,7 +61,7 @@ namespace PersianNight
 				szTemp = sr.ReadToEnd();
 				sr.Close();
 			}
-			catch (Exception e)
+			catch (Exception )
 			{
 				if (sr != null) sr.Close();
 				return false;

@@ -12,34 +12,51 @@ using DxLibDLL;
 
 namespace PersianNight
 {
+	//	なんかとにかく全部突っ込んであるので保存不要なものも多いはず
 	[Serializable]
 	public class DD_SaveData
 	{
-		public string m_szCurrentScriptFileName = "";	//	現在の実行スクリプトファイル名
-		public List<int> m_list_CleardScenarioId;		//	クリア済シナリオリスト
-		public int m_nCurrentScenarioId;				//	現在実行中のシナリオID
-		public int m_nCurrentWalk;				//	現在の歩数
+		/// <summary>現在の実行スクリプトファイル名</summary>
+		public string m_szCurrentScriptFileName = "";
+		/// <summary>クリア済シナリオリスト</summary>
+		public List<int> m_list_CleardScenarioId;
+		/// <summary>現在実行中のシナリオID</summary>
+		public int m_nCurrentScenarioId;
+		/// <summary>現在までのトータル歩行数</summary>
+		public int m_nCurrentWalk;
 		/// <summary>現在までのトータル歩行数</summary>
 		public int nCurrentWalk { get { return m_nCurrentWalk; } }
+		/// <summary>中ボスまでの距離</summary>
 		public int m_nMiddleBossDistance;
 		/// <summary>中ボスまでの距離</summary>
 		public int nMiddleBossDistance { get { return m_nMiddleBossDistance; } }
-		public bool m_bIsGamePlaying = false;			//	現在シナリオ攻略中かどうか
+		/// <summary>現在シナリオ攻略中かどうか</summary>
+		public bool m_bIsGamePlaying = false;
+		/// <summary>RPGモードかADVモードかの管理。ぶっちゃけ廃止したほうがいい</summary>
 		public EnumScenarioStatus m_EnumScenarioStatus;
+		/// <summary>オープニングかエンディングかその他のイベントか</summary>
 		public EnumADVStatus m_CurrentEnumADVStatus;
 		/// <summary>追跡者との距離</summary>
 		public int m_nCurrentDistance;
+		/// <summary>追跡者との距離</summary>
 		public int nCurrentDistance { get { return m_nCurrentDistance; } }
-		public int m_nDistanceOnAct;					//	１行動ごとに縮まる追跡者との距離蓄積
-		/// <summary>オアシスまでの距離</summary>
-		public int nOassisDistance;
+		/// <summary>１行動ごとに縮まる追跡者との距離蓄積</summary>
+		public int m_nDistanceOnAct;
 		/// <summary>１行動ごとに縮まる追跡者との距離蓄積</summary>
 		public int nDistanceOnAct { get { return m_nDistanceOnAct; } }
-		public MD_Scenarios m_CurrentScenarios;			//	実行するシナリオ
+		/// <summary>オアシスまでの距離</summary>
+		public int nOassisDistance;
+		/// <summary>実行するシナリオ</summary>
+		public MD_Scenarios m_CurrentScenarios;
+		/// <summary>実行するシナリオ</summary>
 		public MD_Scenarios CurrentScenarios { get { return m_CurrentScenarios; } }
-		public MD_Characters m_CurrentHero;				//	このシナリオでの主人公
+		/// <summary>このシナリオでの主人公</summary>
+		public MD_Characters m_CurrentHero;
+		/// <summary>このシナリオでの主人公</summary>
 		public MD_Characters CurrentHero { get { return m_CurrentHero; } }
-		public MD_Characters m_CurrentHeroin;				//	このシナリオでのヒロイン
+		/// <summary>このシナリオでのヒロイン</summary>
+		public MD_Characters m_CurrentHeroin;
+		/// <summary>このシナリオでのヒロイン</summary>
 		public MD_Characters CurrentHeroin { get { return m_CurrentHeroin; } }
 		/// <summary>現在のシナリオでのイベントリスト</summary>
 		public List<MD_Events> m_CurrentScenarioEvents;
@@ -49,11 +66,15 @@ namespace PersianNight
 		public MD_Events CuurentEvent { get { return m_CuurentEvent; } }
 		/// <summary>次回発生イベントのindex</summary>
 		public int m_nNextEventIndex;
-		public int m_nMoney = 0;						//	所持金
+		/// <summary>所持金</summary>
+		public int m_nMoney = 0;
+		/// <summary>所持金</summary>
 		public int nMoney { get { return m_nMoney; } }
+		/// <summary>パーティACTゲージ。行動ごとに少しずつたまり、ゲージマックスまで貯まると追跡者との距離が１縮む</summary>
 		public int m_nPartyActGauge = 0;
 		/// <summary>パーティACTゲージ。行動ごとに少しずつたまり、ゲージマックスまで貯まると追跡者との距離が１縮む</summary>
 		public int nPartyActGauge { get { return m_nPartyActGauge; } }
+		/// <summary>遭遇中の敵ベースデータ</summary>
 		public MD_Monsters m_CurrentMonster = null;
 		/// <summary>遭遇中の敵ベースデータ</summary>
 		public MD_Monsters CurrentMonster { get { return m_CurrentMonster; } }
@@ -61,6 +82,7 @@ namespace PersianNight
 		public int m_nCommandCharaIndex;
 		/// <summary>コマンド実行のターゲットとなるDDインデックス</summary>
 		public List<int> m_list_CommandTargetIndex;
+		/// <summary>なんだこれ</summary>
 		public int m_nLogIndex;
 		/// <summary>次回遭遇ボスのインデックス</summary>
 		public int m_nBossIndex;
